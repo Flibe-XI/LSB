@@ -105,42 +105,118 @@ xi.amk.helpers.digSites =
 {
     -- NOTE: These have been picked at random, and not checked against
     --       possible points that might exist in retail
+    -- la theine
+    [0] =
+    {
+    -- (L-10)
+    -- (F-7)
+    -- (F-9)
+    -- (G-8)
+    -- (D-7)
+    -- (G-11)
+    -- (G-6) (NW corner of carby circle)
+    -- (K-5) (on  a small gray patchin the grass)
+    -- (K-10) (SE corner bottom of ramp)
+    -- (G-11) (small gray plot near edge of cliffer
+    -- (I-11) (slightly to left of lone tree)
+    },
 
     -- 1 = Valkurm Dunes
     [1] =
     {
-        { x = 141, z =  28 },
-        { x = 392, z = -91 },
+        -- (B-7)
+        -- (H-8)
+        -- (E-7)
+        -- (D-7)
+        -- (D-6) (ne corner near tree)
+        -- (J-7) (5 yalms from flowers near a laorge rock)
+        -- (K-8) (on corner of road)
+        -- (F-7) (next to root closest to trees)
+
+        
     },
     -- 2 = Jugner Forest
     [2] =
     {
-        { x = 247, z = -130 },
+        -- (K-6)
+        -- (G-7) (nw corner)
+        -- (G-8) (SW corner)
+        -- (G-9) (W side)
+        -- (I-5)
+        -- (I-9)
+        -- (J-5)
+        -- (L-7)
     },
     -- 3 = Konschtat Highlands
     [3] =
     {
-        { x = 366, z = 468 },
+        -- (E-6)
+        -- (E-9) (center a bit NW of big rock)
+        -- (F-5)
+        -- (G-9)
+        -- (G-12)
+        -- (K-5)
+        -- (K-7)
+        -- (H-5)
+        -- (H-12)
+        -- (J-4)
+        
     },
     -- 4 = Pashhow Marshlands
     [4] =
     {
-        { x = 542, z = 498 },
+        -- (L-7)
+        -- (K-6)
+        -- (I-7)
+        -- (I-8)
+        -- (H-6)
+        -- (G-7/8)
+        -- (F-5)
+        -- (E/F-10)
+        -- (K-10)
     },
     -- 5 = Tahrongi Canyon
     [5] =
     {
-        { x = 91, z = -106 },
+        -- (H-4) (Center)
+        -- (H-9)
+        -- (H-10)
+        -- (E-9)
+        -- (G-4)
+        -- (I-7)
+        -- (J-7)
+        -- (I-9)
+        -- (J-10) SW corner near a green patch
+        -- (F-5) SW corner on a green patch
+        -- (G-9) NW corner
+        -- (F-6) directly on center of grid
     },
     -- 6 = Buburimu Peninsula
     [6] =
     {
-        { x = -111, z = -235 },
+        -- (G-9)
+        -- (E-9)
+        -- (F-6)
+        -- (F-8)
+        -- (J-6)
+        -- (J-7)
+        -- (H-6)
+        -- (F-9)
+        -- (K-9)
     },
     -- 7 = Meriphataud Mountains
     [7] =
     {
-        { x = 698, z = -33 },
+        -- (J-4)
+        -- (H-11)
+        -- (H-3)
+        -- (K-10)
+        -- (K-7)
+        -- (D-8)
+        -- (D-6) W of center
+        -- (H-5) NW corner
+        -- (D-10)
+        -- (H-7) Middle on top of little ledge
     },
     -- 8 = The Sanctuary of Zi'tah
     [8] =
