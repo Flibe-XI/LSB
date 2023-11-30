@@ -6,6 +6,8 @@
 -- Note: KI aquisition is handled in chocobo_digging.lua
 -- MOLDY_WORM_EATEN_CHEST : !addkeyitem 1144
 -----------------------------------
+require('scripts/globals/missions')
+require('scripts/globals/interaction/mission')
 require('scripts/missions/amk/helpers')
 -----------------------------------
 
@@ -31,7 +33,8 @@ mission.sections =
                 -- Reminder
                 onTrigger = function(player, npc)
                     local diggingZone = xi.amk.helpers.getDiggingZone(player)
-                    return mission:progressEvent(10182, diggingZone)
+                    local diggingZoneCsId = xi.amk.helpers.digSites[diggingZone].eventID
+                    return mission:progressEvent(10182, diggingZoneCsId)
                 end,
             },
 
@@ -44,7 +47,7 @@ mission.sections =
         },
     },
 
-    -- Digging minigame, handled in
+    -- Digging minigame, handled in xi.amk.helpers and chocobo_digging.lua
     {
         check = function(player, currentMission, missionStatus, vars)
             return currentMission == mission.missionId and missionStatus == 1 and
@@ -57,8 +60,10 @@ mission.sections =
             {
                 -- Reminder
                 onTrigger = function(player, npc)
+                    -- Variable is stored as 1-indexed zone offset, cutscenes are 0-indexed
                     local diggingZone = xi.amk.helpers.getDiggingZone(player)
-                    return mission:progressEvent(10189, diggingZone)
+                    local diggingZoneCsId = xi.amk.helpers.digSites[diggingZone].eventID
+                    return mission:progressEvent(10189, diggingZoneCsId)
                 end,
             },
         },
