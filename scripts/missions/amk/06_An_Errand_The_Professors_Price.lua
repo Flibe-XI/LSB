@@ -94,7 +94,7 @@ mission.sections =
     -- Go get the Starfruit
     {
         check = function(player, currentMission, missionStatus, vars)
-            return currentMission == mission.missionId and not player:hasKeyItem(xi.ki.RIPE_STARFRUIT)
+            return currentMission >= mission.missionId and not player:hasKeyItem(xi.ki.RIPE_STARFRUIT)
         end,
 
         [xi.zone.WINDURST_WALLS] =
@@ -112,7 +112,18 @@ mission.sections =
             ['qm1'] =
             {
                 onTrigger = function(player, npc)
-                    return mission:progressEvent(100)
+                    local hasOrbs = 0
+                    for i = 1, #orbKeyItems do
+                        if player:hasKeyItem(orbKeyItems[i][1]) then
+                            hasOrbs = hasOrbs + 1
+                        end
+                    end
+
+                    if hasOrbs > 0 then
+                        return mission:progressEvent(100)
+                    else
+                        return mission:messageSpecial(horutotoID.text.IF_HAD_ORBS, xi.ki.ORB_OF_SWORDS, xi.ki.ORB_OF_CUPS, xi.ki.ORB_OF_BATONS, xi.ki.ORB_OF_COINS)
+                    end
                 end,
             },
 
@@ -130,7 +141,7 @@ mission.sections =
     -- Got the Starfruit
     {
         check = function(player, currentMission, missionStatus, vars)
-            return currentMission == mission.missionId and
+            return currentMission >= mission.missionId and
                 player:hasKeyItem(xi.ki.RIPE_STARFRUIT) and
                 not player:needToZone()
         end,
@@ -164,7 +175,6 @@ mission.sections =
         {
             ['qm1'] =
             {
-                -- TODO: Reminder about the orbs
                 onTrigger = function(player, npc)
                     return mission:messageSpecial(horutotoID.text.CANNOT_ENTER_BATTLEFIELD, xi.ki.RIPE_STARFRUIT):setPriority(1000)
                 end,
