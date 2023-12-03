@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Outer Horutoto Ruins
---  Mob: Five of Coins
+--  Mob: Two of Coins
 -----------------------------------
 local entity = {}
 
