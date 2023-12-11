@@ -144,18 +144,18 @@ mission.sections =
                     end
 
                     -- Determine if QM triggered is in markerset
-                    local item = 0
+                    local keyItem = 0
                     for setIndex = 1, 9 do
                         local markerIdIndex = markerSets[amkMarkerSet][setIndex]
                         if npc:getID() == markerIds[markerIdIndex] then
-                            item = xi.ki.STONE_OF_SURYA + setIndex - 1
+                            keyItem = xi.ki.STONE_OF_SURYA + setIndex - 1
                         end
                     end
 
                     -- Give KI if QM is correct
-                    if item ~= 0 and not player:hasKeyItem(item) then
-                        player:addKeyItem(item)
-                        return mission:messageSpecial(ID.text.KEYITEM_OBTAINED, item)
+                    if keyItem ~= 0 and not player:hasKeyItem(keyItem) then
+                        player:addKeyItem(keyItem)
+                        return mission:messageSpecial(ID.text.KEYITEM_OBTAINED, keyItem)
                     end
                 end,
             },
