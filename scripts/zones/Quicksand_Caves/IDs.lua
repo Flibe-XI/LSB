@@ -41,6 +41,7 @@ zones[xi.zone.QUICKSAND_CAVES] =
         HOMEPOINT_SET                 = 11435, -- Home point set!
         UNITY_WANTED_BATTLE_INTERACT  = 11493, -- Those who have accepted % must pay # Unity accolades to participate. The content for this Wanted battle is #. [Ready to begin?/You do not have the appropriate object set, so your rewards will be limited.]
     },
+
     mob =
     {
         SAGITTARIUS_X_XIII_PH   =
@@ -104,6 +105,7 @@ zones[xi.zone.QUICKSAND_CAVES] =
         TRIBUNUS_VII_I        = 17629643,
         GIRTABLULU            = 17629645,
     },
+
     npc =
     {
         ANTICAN_TAG_POSITIONS =
@@ -118,6 +120,26 @@ zones[xi.zone.QUICKSAND_CAVES] =
         CHAINS_THAT_BIND_US_QM = 17629746,
         TREASURE_COFFER        = 17629747,
         ANTICAN_TAG_QM         = 17629769,
+        QM_AMK_1               = 17629668,
+        QM_AMK_8               = 17629752,
+        QM_AMK_9               = 17629753,
+        QM_AMK_10              = 17629754,
+        QM_AMK_11              = 17629755,
+        QM_AMK_12              = 17629756,
+        QM_AMK_13              = 17629757,
+        QM_AMK_14              = 17629758,
+        QM_AMK_15              = 17629759,
+        QM_AMK_16              = 17629760,
+        QM_AMK_17              = 17629761,
+        QM_AMK_18              = 17629762,
+        QM_AMK_19              = 17629763,
+        QM_AMK_20              = 17629764,
+        QM_AMK_21              = 17629765,
+        QM_AMK_22              = 17629766,
+        QM_AMK_23              = 17629767,
+        QM_AMK_24              = 17629768,
+        QM_AMK_26              = 17629770,
+        QM_AMK_27              = 17629771,
     },
 }
 
