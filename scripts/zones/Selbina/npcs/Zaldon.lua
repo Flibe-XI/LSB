@@ -563,66 +563,15 @@ local function giveReward(player, csid)
 end
 
 entity.onTrade = function(player, npc, trade)
-    local insideTheBelly = player:getQuestStatus(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.INSIDE_THE_BELLY)
-    -- INSIDE THE BELLY
-    if
-        insideTheBelly == xi.questStatus.QUEST_ACCEPTED or
-        insideTheBelly == xi.questStatus.QUEST_COMPLETED
-    then
-        for fish, v in pairs(fishRewards) do
-            if npcUtil.tradeHas(trade, fish) then
-                tradeFish(player, fish)
-                break
-            end
-        end
-    end
 end
 
 entity.onTrigger = function(player, npc)
-    -- TODO: once fishing skill is implemented, replace all these mLvl checks with player:getSkillLevel(xi.skill.FISHING)
-
-    local theRealGift    = player:getQuestStatus(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.THE_REAL_GIFT)
-    local insideTheBelly = player:getQuestStatus(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.INSIDE_THE_BELLY)
-    local mLvl           = player:getMainLvl()
-
-    if
-        mLvl >= 30 and
-        mLvl < 39 and
-        (insideTheBelly == xi.questStatus.QUEST_ACCEPTED or insideTheBelly == xi.questStatus.QUEST_COMPLETED)
-    then
-        player:startEvent(162, 5799, 4481, 5802, 4428)
-    elseif
-        mLvl >= 40 and
-        mLvl < 49 and
-        (insideTheBelly == xi.questStatus.QUEST_ACCEPTED or insideTheBelly == xi.questStatus.QUEST_COMPLETED)
-    then
-        player:startEvent(163, 5805, 4385, 5800, 5802, 5450) -- 5802(Istavrit) is skill cap 41, and therefore is used in this and the previous csid
-    elseif
-        mLvl >= 50 and
-        mLvl <= 74 and
-        (insideTheBelly == xi.questStatus.QUEST_ACCEPTED or insideTheBelly == xi.questStatus.QUEST_COMPLETED)
-    then
-        player:startEvent(164, 5806, 5451, 5801, 5804, 5807, 5135)
-    elseif
-        mLvl >= 75 and
-        (insideTheBelly == xi.questStatus.QUEST_ACCEPTED or insideTheBelly == xi.questStatus.QUEST_COMPLETED)
-    then
-        player:startEvent(165, 4451, 4477, 5803, 4307, 4478, 5467, 4304, 4474)
-
-    -- STANDARD DIALOG
-    else
-        player:startEvent(150)
-    end
 end
 
 entity.onEventUpdate = function(player, csid, option, npc)
 end
 
 entity.onEventFinish = function(player, csid, option, npc)
-    -- INSIDE THE BELLY
-    if csid == 166 or csid == 167 then
-        giveReward(player, csid)
-    end
 end
 
 return entity
