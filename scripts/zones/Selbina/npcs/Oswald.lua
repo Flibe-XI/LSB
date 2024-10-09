@@ -27,11 +27,7 @@ entity.onTrigger = function(player, npc)
     local theGift      = player:getQuestStatus(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.THE_GIFT)
     local theRealGift  = player:getQuestStatus(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.THE_REAL_GIFT)
 
-    if player:getCharVar('underTheSeaVar') == 1 then
-        player:startEvent(32) -- During quest 'Under the sea' - 1st dialog
-    elseif player:hasKeyItem(xi.ki.ETCHED_RING) then
-        player:startEvent(37) -- Finish quest 'Under the sea'
-    elseif
+    if
         underTheSea == xi.questStatus.QUEST_COMPLETED and
         theSandCharm == xi.questStatus.QUEST_AVAILABLE
     then
@@ -68,14 +64,7 @@ entity.onEventUpdate = function(player, csid, option, npc)
 end
 
 entity.onEventFinish = function(player, csid, option, npc)
-    if csid == 32 then
-        player:setCharVar('underTheSeaVar', 2)
-    elseif
-        csid == 37 and
-        npcUtil.completeQuest(player, xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.UNDER_THE_SEA, { item = xi.item.AMBER_EARRING, fame_area = xi.fameArea.SELBINA_RABAO, title = xi.title.LIL_CUPID, var = 'underTheSeaVar' })
-    then
-        player:delKeyItem(xi.ki.ETCHED_RING)
-    elseif csid == 70 and option == 50 then
+    if csid == 70 and option == 50 then
         player:addQuest(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.THE_GIFT)
     elseif
         csid == 72 and
