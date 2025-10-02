@@ -880,10 +880,12 @@ public:
     void setMobAbilityEnabled(bool state);   // halt/resumes mob skills
     void setMobSkillAttack(int16 listId);    // enable/disable using mobskills as regular attacks
 
-    int16 getMobMod(uint16 mobModID);
-    void  setMobMod(uint16 mobModID, int16 value);
-    void  addMobMod(uint16 mobModID, int16 value);
-    void  delMobMod(uint16 mobModID, int16 value);
+    int16  getMobMod(uint16 mobModID);
+    void   setMobMod(uint16 mobModID, int16 value);
+    void   addMobMod(uint16 mobModID, int16 value);
+    void   delMobMod(uint16 mobModID, int16 value);
+    void   setDmgMultiplier(uint16 value);
+    uint16 getDmgMultiplier();
 
     uint32 getBattleTime();
     auto   getCrystalElement() const -> ELEMENT;

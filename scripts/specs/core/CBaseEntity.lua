@@ -3889,6 +3889,15 @@ end
 function CBaseEntity:delMobMod(mobModID, value)
 end
 
+---@param value integer
+---@return nil
+function CBaseEntity:setDmgMultiplier(value)
+end
+
+---@return integer
+function CBaseEntity:getDmgMultiplier()
+end
+
 ---@nodiscard
 ---@return integer
 function CBaseEntity:getBattleTime()

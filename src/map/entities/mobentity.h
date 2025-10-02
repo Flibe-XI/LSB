@@ -143,14 +143,16 @@ public:
     auto GetEligibleSeals() -> std::vector<uint16>;
     auto GetEligibleGeodes() const -> std::vector<uint16>;
 
-    void  setMobMod(uint16 type, int16 value);
-    int16 getMobMod(uint16 type);
-    void  addMobMod(uint16 type, int16 value);
-    void  defaultMobMod(uint16 type, int16 value); // set value if value has not been already set
-    void  resetMobMod(uint16 type);                // resets mob mod to original value
-    int32 getBigMobMod(uint16 type);               // multiplies mod by 1000
-    void  saveMobModifiers();                      // save current state of modifiers
-    void  restoreMobModifiers();                   // restore to saved state
+    void   setMobMod(uint16 type, int16 value);
+    int16  getMobMod(uint16 type);
+    void   addMobMod(uint16 type, int16 value);
+    void   defaultMobMod(uint16 type, int16 value); // set value if value has not been already set
+    void   resetMobMod(uint16 type);                // resets mob mod to original value
+    int32  getBigMobMod(uint16 type);               // multiplies mod by 1000
+    void   saveMobModifiers();                      // save current state of modifiers
+    void   restoreMobModifiers();                   // restore to saved state
+    void   setDmgMultiplier(uint16 value);
+    uint16 getDmgMultiplier();
 
     void SetCallForHelpFlag(bool call);
     bool GetCallForHelpFlag() const;

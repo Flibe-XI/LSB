@@ -17792,6 +17792,42 @@ void CLuaBaseEntity::delMobMod(uint16 mobModID, int16 value)
 }
 
 /************************************************************************
+ *  Function: setDmgMultiplier()
+ *  Purpose : Sets the damage multiplier to a value as percent
+ *  Example : mob:setDmgMultiplier(50) -- 50%
+ *  Notes   :
+ ************************************************************************/
+
+void CLuaBaseEntity::setDmgMultiplier(uint16 value)
+{
+    if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
+    {
+        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        return;
+    }
+
+    static_cast<CMobEntity*>(m_PBaseEntity)->setDmgMultiplier(value);
+}
+
+/************************************************************************
+ *  Function: getDmgMultiplier()
+ *  Purpose : Returns the damage multiplier
+ *  Example : mob:getDmgMultiplier()
+ *  Notes   :
+ ************************************************************************/
+
+uint16 CLuaBaseEntity::getDmgMultiplier()
+{
+    if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
+    {
+        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        return 0;
+    }
+
+    return static_cast<CMobEntity*>(m_PBaseEntity)->getDmgMultiplier();
+}
+
+/************************************************************************
  *  Function: getBattleTime()
  *  Purpose : Returns the time the Mob has been engaged in seconds
  *  Example : if mob:getBattleTime() == 3600 then -- 1 Hour
@@ -20160,6 +20196,8 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("setMobMod", CLuaBaseEntity::setMobMod);
     SOL_REGISTER("addMobMod", CLuaBaseEntity::addMobMod);
     SOL_REGISTER("delMobMod", CLuaBaseEntity::delMobMod);
+    SOL_REGISTER("setDmgMultiplier", CLuaBaseEntity::setDmgMultiplier);
+    SOL_REGISTER("getDmgMultiplier", CLuaBaseEntity::getDmgMultiplier);
 
     SOL_REGISTER("getBattleTime", CLuaBaseEntity::getBattleTime);
     SOL_REGISTER("getCrystalElement", CLuaBaseEntity::getCrystalElement);

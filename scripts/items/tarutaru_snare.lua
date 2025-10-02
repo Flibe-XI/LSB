@@ -12,7 +12,12 @@ itemObject.onItemCheck = function(target, item, param, caster)
 end
 
 itemObject.onItemUse = function(target)
-    -- TODO: reduce damage
+    target:setDmgMultiplier(1)
+    target:timer(60000, function(mobArg)
+        if mobArg then
+            mobArg:setDmgMultiplier(100)
+        end
+    end)
 end
 
 return itemObject

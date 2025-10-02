@@ -497,6 +497,16 @@ void CMobEntity::restoreMobModifiers()
     m_mobModStat = m_mobModStatSave;
 }
 
+void CMobEntity::setDmgMultiplier(uint16 value)
+{
+    m_dmgMult = std::clamp<uint16>(value, 0, 10000);
+}
+
+uint16 CMobEntity::getDmgMultiplier()
+{
+    return m_dmgMult;
+}
+
 void CMobEntity::HideHP(bool hide)
 {
     if (hide)
