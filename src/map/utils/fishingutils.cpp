@@ -2430,6 +2430,26 @@ fishresponse_t* FishingCheck(CCharEntity* PChar, uint8 fishingSkill, rod_t* rod,
         ItemPoolWeight = 0;
     }
 
+    if (PChar->GetLocalVar("bChartActive") == 1 && PChar->getZone() == ZONE_BUBURIMU_PENINSULA)
+    {
+        MobHookPool.clear();
+
+        for (auto fishmob : FishZoneMobList[PChar->getZone()])
+        {
+            if (fishmob.second->mobName == "Brigand_Puffer_Pugil")
+            {
+                CMobEntity* PMob = dynamic_cast<CMobEntity*>(zoneutils::GetEntity(fishmob.second->mobId, TYPE_MOB));
+                if (PMob != nullptr && PMob->GetLocalVar("hooked") == 0 && !PMob->isAlive())
+                {
+                    auto* mob = fishmob.second;
+                    MobHookPool.insert(std::make_pair(mob, 100));
+                }
+
+                break;
+            }
+        }
+    }
+
     // Select mob
     if (!MobHookPool.empty())
     {
@@ -2447,7 +2467,7 @@ fishresponse_t* FishingCheck(CCharEntity* PChar, uint8 fishingSkill, rod_t* rod,
     if (!ChestPool.empty())
     {
         // Brigand's Chart Quest
-        if (PChar->GetLocalVar("bChartActive") == 1)
+        if (PChar->GetLocalVar("bChartActive") == 1 && PChar->getZone() == ZONE_BUBURIMU_PENINSULA)
         {
             for (uint32 chestId : ChestPool)
             {
@@ -2712,6 +2732,10 @@ void FishingAction(CCharEntity* PChar, const GP_CLI_COMMAND_FISHING_2_MODE mode,
             if (PChar->GetLocalVar("pChartActive") == 1 && PChar->getZone() == ZONE_VALKURM_DUNES)
             {
                 fishingArea = FishingAreaList[ZONE_VALKURM_DUNES][2];
+            }
+            else if (PChar->GetLocalVar("bChartActive") == 1 && PChar->getZone() == ZONE_BUBURIMU_PENINSULA)
+            {
+                fishingArea = FishingAreaList[ZONE_BUBURIMU_PENINSULA][2];
             }
 
             if (PChar->hookedFish != nullptr)

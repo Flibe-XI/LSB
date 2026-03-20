@@ -42194,7 +42194,7 @@ INSERT INTO `mob_spawn_points` VALUES (17261032,0,'Goblin_Shaman','Goblin Shaman
 INSERT INTO `mob_spawn_points` VALUES (17261033,0,'Goblin_Shaman','Goblin Shaman',49,30,35,-463.815,-31.213,59.398,115);
 INSERT INTO `mob_spawn_points` VALUES (17261034,0,'Goblin_Guide','Goblin Guide',50,35,35,-451.610,-32.269,84.223,120);
 
-INSERT INTO `mob_spawn_points` VALUES (17261040,0,'Puffer_Pugil','Puffer Pugil',2,15,18,-81.741,19.635,-325.773,94);
+INSERT INTO `mob_spawn_points` VALUES (17261040,0,'Brigand_Puffer_Pugil','Puffer Pugil',2,15,18,-81.741,19.635,-325.773,94);
 INSERT INTO `mob_spawn_points` VALUES (17261041,0,'Pixie','Pixie',51,51,54,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17261042,0,'Pixie','Pixie',51,51,54,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17261043,0,'Pixie','Pixie',51,51,54,0.000,0.000,0.000,0);

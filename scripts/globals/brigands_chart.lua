@@ -153,6 +153,105 @@ xi.brigandsChart.onEventFinish = function(player, csid, option, npc)
     end
 end
 
+xi.brigandsChart.rewards =
+{
+    common =
+    {
+        {
+            { itemId = xi.item.BEASTCOIN,               weight = xi.loot.weight.NORMAL   },
+            { itemId = xi.item.BLUE_PITCHER,            weight = xi.loot.weight.NORMAL   },
+            { itemId = xi.item.COPY_OF_LINES_AND_SPACE, weight = xi.loot.weight.VERY_LOW },
+            { itemId = xi.item.DWARF_PUGIL,             weight = xi.loot.weight.NORMAL   },
+            { itemId = xi.item.GOLD_BEASTCOIN,          weight = xi.loot.weight.LOW      },
+            { itemId = xi.item.MYTHRIL_BEASTCOIN,       weight = xi.loot.weight.LOW      },
+            { itemId = xi.item.ONE_BYNE_BILL,           weight = xi.loot.weight.VERY_LOW },
+            { itemId = xi.item.ORDELLE_BRONZEPIECE,     weight = xi.loot.weight.VERY_LOW },
+            { itemId = xi.item.PLATINUM_BEASTCOIN,      weight = xi.loot.weight.VERY_LOW },
+            { itemId = xi.item.RUSTY_CAP,               weight = xi.loot.weight.LOW      },
+            { itemId = xi.item.RUSTY_LEGGINGS,          weight = xi.loot.weight.NORMAL   },
+            { itemId = xi.item.SKY_POT,                 weight = xi.loot.weight.LOW      },
+            { itemId = xi.item.TUKUKU_WHITESHELL,       weight = xi.loot.weight.VERY_LOW },
+            { itemId = xi.item.WOODEN_FLOWERPOT,        weight = xi.loot.weight.VERY_LOW },
+        },
+    },
+
+    special =
+    {
+        {
+            { itemId = xi.item.NONE,         weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.PENGUIN_RING, weight = xi.loot.weight.NORMAL },
+        },
+    },
+}
+
 xi.brigandsChart.jadeEtuiOnTrigger = function(player, npc)
-    -- TODO: Distribute rewards
+    local qm1 = GetNPCByID(ID.npc.BRIGAND_CHART_QM)
+    if not qm1 then
+        return
+    end
+
+    local spawnerID = qm1:getLocalVar('bChartSpawnerID')
+
+    -- Event has been reset since this chest spawned, remove it
+    if spawnerID == 0 then
+        removeChest(npc)
+        return
+    end
+
+    if player:getID() ~= spawnerID then
+        return
+    end
+
+    if npc:getLocalVar(xi.animationString.OPEN_CRATE_GLOW) == 0 then
+        npc:entityAnimationPacket(xi.animationString.OPEN_CRATE_GLOW)
+        npc:setLocalVar(xi.animationString.OPEN_CRATE_GLOW, 1)
+
+        local chestNumber = player:getLocalVar('bChartChestNum')
+        local rewardTable = {}
+        local penguinFound = false
+
+        -- Fourth or fifth chest, chance to give penguin ring
+        if chestNumber >= 3 then
+            local specialReward = utils.selectFromLootGroups(player, xi.brigandsChart.rewards.special)[1]
+            if
+                specialReward and
+                specialReward.itemId == xi.item.PENGUIN_RING
+            then
+                table.insert(rewardTable, specialReward.itemId)
+                table.insert(rewardTable, xi.item.YELLOW_GLOBE)
+                table.insert(rewardTable, xi.item.YELLOW_GLOBE)
+                table.insert(rewardTable, xi.item.YELLOW_GLOBE)
+                penguinFound = true
+            end
+        end
+
+        if #rewardTable == 0 then
+            local commonReward = utils.selectFromLootGroups(player, xi.brigandsChart.rewards.common)[1]
+            table.insert(rewardTable, commonReward.itemId)
+        end
+
+        for _, reward in pairs(rewardTable) do
+            if reward ~= nil then
+                player:addTreasure(reward, npc)
+            end
+        end
+
+        if
+            penguinFound or
+            chestNumber > 4
+        then
+            -- Event automatically ends once the ring has been found
+            resetEvent()
+        else
+            player:setLocalVar('bChartChestNum', chestNumber + 1)
+
+            npc:timer(15000, function(npcArg)
+                npcArg:entityAnimationPacket(xi.animationString.STATUS_DISAPPEAR)
+            end)
+
+            npc:timer(16000, function(npcArg)
+                removeChest(npcArg)
+            end)
+        end
+    end
 end
