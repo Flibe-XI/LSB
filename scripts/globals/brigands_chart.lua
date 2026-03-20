@@ -10,11 +10,28 @@ local ID = zones[xi.zone.BUBURIMU_PENINSULA]
 xi = xi or {}
 xi.brigandsChart = xi.brigandsChart or {}
 
+local jadeEtuis  = ID.npc.JADE_ETUI_TABLE
+
+local function removeChest(npc)
+    npc:setAnimationSub(0, false)
+    npc:setStatus(xi.status.DISAPPEAR)
+    npc:resetLocalVars()
+end
+
+local function clearChests()
+    for _, chestId in pairs(jadeEtuis) do
+        local chest = GetNPCByID(chestId)
+
+        if chest then
+            removeChest(chest)
+        end
+    end
+end
+
 local function resetEvent()
     local qm1        = GetNPCByID(ID.npc.BRIGAND_CHART_QM)
     local npcHume    = GetNPCByID(ID.npc.BRIGAND_CHART_HUME)
     local shimmering = GetNPCByID(ID.npc.SHIMMERING_POINT)
-    local jadeEtuis  = ID.npc.JADE_ETUI_TABLE
 
     if qm1 then
         local player = GetPlayerByID(qm1:getLocalVar('bChartSpawnerID'))
@@ -42,18 +59,7 @@ local function resetEvent()
     end
 
     -- Disappear Jade Etuis
-    if jadeEtuis then
-        for _, id in ipairs(jadeEtuis) do
-            local jade = GetNPCByID(id)
-
-            if jade then
-                jade:setStatus(xi.status.DISAPPEAR)
-                jade:setAnimation(xi.animation.NONE)
-                jade:entityAnimationPacket(xi.animationString.STATUS_DISAPPEAR)
-                jade:resetLocalVars()
-            end
-        end
-    end
+    clearChests()
 end
 
 local eventTable =
@@ -66,11 +72,15 @@ local eventTable =
     [5] = { time = 170, text = ID.text.WHAT_CAN_I_DO + 4 },
     [6] = { time = 180, text = ID.text.WHAT_CAN_I_DO + 5 },
 }
-
+xi.brigandsChart.resetEvent = resetEvent
 local function emoteChecking(npc, spawner, timeRemaining, timeOfLastCheck, phase)
     -- Event continues if player leaves zone
     -- https://www.youtube.com/watch?v=_opqVW-HIu0
     -- https://discord.com/channels/443544205206355968/446401624102010901/650072608922009660
+
+    if spawner:getID() ~= npc:getLocalVar('bChartSpawnerID') then
+        return
+    end
 
     local currentTime      = GetSystemTime()
     local newTimeRemaining = timeRemaining - (currentTime - timeOfLastCheck)
@@ -78,10 +88,7 @@ local function emoteChecking(npc, spawner, timeRemaining, timeOfLastCheck, phase
 
     -- Check time. Show text and move phase if enough time has passed.
     if totalTimeElapsed > eventTable[phase].time then
-        local qm1 = GetNPCByID(ID.npc.BRIGAND_CHART_QM)
-        if qm1 then
-            spawner:showText(qm1, eventTable[phase].text)
-        end
+        spawner:showText(npc, eventTable[phase].text)
 
         phase = phase + 1
     end
@@ -96,7 +103,8 @@ local function emoteChecking(npc, spawner, timeRemaining, timeOfLastCheck, phase
 end
 
 xi.brigandsChart.onTrade = function(player, npc, trade)
-    --[[
+    clearChests()
+
     if
         npc:getStatus() == xi.status.NORMAL and
         npcUtil.tradeHasExactly(trade, xi.item.BRIGANDS_CHART)
@@ -104,7 +112,6 @@ xi.brigandsChart.onTrade = function(player, npc, trade)
         player:messageSpecial(ID.text.RETURN_TO_SEA, xi.item.BRIGANDS_CHART)
         player:startEvent(902)
     end
-    ]]
 end
 
 xi.brigandsChart.onEventUpdate = function(player, csid, option, npc)
@@ -148,8 +155,7 @@ xi.brigandsChart.onEventFinish = function(player, csid, option, npc)
         player:showText(npc, ID.text.MY_ITEM, xi.item.PENGUIN_RING)
 
         -- Events will occur for the next 180 seconds according to eventTable
-        emoteChecking(npc, player, 180, GetSystemTime(), 1)
-        -- TODO: add fishing hook to catch chests & monster specific to event
+        emoteChecking(npc, player, 120, GetSystemTime(), 1)
     end
 end
 
@@ -164,13 +170,12 @@ xi.brigandsChart.rewards =
             { itemId = xi.item.DWARF_PUGIL,             weight = xi.loot.weight.NORMAL   },
             { itemId = xi.item.GOLD_BEASTCOIN,          weight = xi.loot.weight.LOW      },
             { itemId = xi.item.MYTHRIL_BEASTCOIN,       weight = xi.loot.weight.LOW      },
+            { itemId = xi.item.ORDELLE_BRONZEPIECE,     weight = xi.loot.weight.LOW      },
             { itemId = xi.item.ONE_BYNE_BILL,           weight = xi.loot.weight.VERY_LOW },
-            { itemId = xi.item.ORDELLE_BRONZEPIECE,     weight = xi.loot.weight.VERY_LOW },
             { itemId = xi.item.PLATINUM_BEASTCOIN,      weight = xi.loot.weight.VERY_LOW },
             { itemId = xi.item.RUSTY_CAP,               weight = xi.loot.weight.LOW      },
             { itemId = xi.item.RUSTY_LEGGINGS,          weight = xi.loot.weight.NORMAL   },
             { itemId = xi.item.SKY_POT,                 weight = xi.loot.weight.LOW      },
-            { itemId = xi.item.TUKUKU_WHITESHELL,       weight = xi.loot.weight.VERY_LOW },
             { itemId = xi.item.WOODEN_FLOWERPOT,        weight = xi.loot.weight.VERY_LOW },
         },
     },
@@ -195,6 +200,7 @@ xi.brigandsChart.jadeEtuiOnTrigger = function(player, npc)
     -- Event has been reset since this chest spawned, remove it
     if spawnerID == 0 then
         removeChest(npc)
+
         return
     end
 
