@@ -78,10 +78,6 @@ local function emoteChecking(npc, spawner, timeRemaining, timeOfLastCheck, phase
     -- https://www.youtube.com/watch?v=_opqVW-HIu0
     -- https://discord.com/channels/443544205206355968/446401624102010901/650072608922009660
 
-    if spawner:getID() ~= npc:getLocalVar('bChartSpawnerID') then
-        return
-    end
-
     local currentTime      = GetSystemTime()
     local newTimeRemaining = timeRemaining - (currentTime - timeOfLastCheck)
     local totalTimeElapsed = 180 - newTimeRemaining
@@ -155,7 +151,7 @@ xi.brigandsChart.onEventFinish = function(player, csid, option, npc)
         player:showText(npc, ID.text.MY_ITEM, xi.item.PENGUIN_RING)
 
         -- Events will occur for the next 180 seconds according to eventTable
-        emoteChecking(npc, player, 120, GetSystemTime(), 1)
+        emoteChecking(npc, player, 180, GetSystemTime(), 1)
     end
 end
 
@@ -188,7 +184,7 @@ xi.brigandsChart.rewards =
         },
     },
 }
-
+xi.brigandsChart.r = resetEvent
 xi.brigandsChart.jadeEtuiOnTrigger = function(player, npc)
     local qm1 = GetNPCByID(ID.npc.BRIGAND_CHART_QM)
     if not qm1 then
@@ -200,7 +196,6 @@ xi.brigandsChart.jadeEtuiOnTrigger = function(player, npc)
     -- Event has been reset since this chest spawned, remove it
     if spawnerID == 0 then
         removeChest(npc)
-
         return
     end
 
